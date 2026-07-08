@@ -1,125 +1,104 @@
-// Get Elements
-const form = document.getElementById("transactionForm");
-const table = document.getElementById("transactionTable");
+const balance = document.getElementById("balance");
+const moneyPlus = document.getElementById("money-plus");
+const moneyMinus = document.getElementById("money-minus");
+const list = document.getElementById("list");
+const form = document.getElementById("form");
+const text = document.getElementById("text");
+const amount = document.getElementById("amount");
 
-const incomeEl = document.getElementById("income");
-const expenseEl = document.getElementById("expense");
-const balanceEl = document.getElementById("balance");
-const transactionEl = document.getElementById("transactions");
-
-const themeBtn = document.getElementById("themeBtn");
-const search = document.getElementById("search");
-
-// Load Data
+// Get data from Local Storage
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-// Display Transactions
-function displayTransactions(list = transactions) {
+// Add transaction to page
+function addTransactionDOM(transaction) {
 
-    table.innerHTML = "";
+    const sign = transaction.amount < 0 ? "minus" : "";
 
-    list.forEach((item, index) => {
+    const item = document.createElement("li");
 
-        let row = `
-        <tr>
-            <td>${item.title}</td>
-            <td>₹${item.amount}</td>
-            <td>${item.type}</td>
-            <td>${item.category}</td>
-            <td>${item.date}</td>
-            <td>
-                <button class="deleteBtn" onclick="deleteTransaction(${index})">
-                    Delete
-                </button>
-            </td>
-        </tr>
-        `;
+    item.classList.add(sign);
 
-        table.innerHTML += row;
-    });
+    item.innerHTML = `
+        ${transaction.text}
+        <span>₹${transaction.amount}</span>
+        <button class="delete-btn" onclick="removeTransaction(${transaction.id})">X</button>
+    `;
 
-    updateDashboard();
+    list.appendChild(item);
 }
+
+// Update balance
+function updateValues() {
+
+    const amounts = transactions.map(item => item.amount);
+
+    const total = amounts.reduce((acc, item) => acc + item, 0).toFixed(2);
+
+    const income = amounts
+        .filter(item => item > 0)
+        .reduce((acc, item) => acc + item, 0)
+        .toFixed(2);
+
+    const expense = (
+        amounts
+        .filter(item => item < 0)
+        .reduce((acc, item) => acc + item, 0) * -1
+    ).toFixed(2);
+
+    balance.innerText = `₹${total}`;
+    moneyPlus.innerText = `₹${income}`;
+    moneyMinus.innerText = `₹${expense}`;
+}
+
+// Save to Local Storage
+function updateLocalStorage() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
+// Initialize App
+function init() {
+
+    list.innerHTML = "";
+
+    transactions.forEach(addTransactionDOM);
+
+    updateValues();
+}
+
+init();
 
 // Add Transaction
 form.addEventListener("submit", function(e){
 
     e.preventDefault();
 
-    let transaction = {
+    if(text.value.trim()==="" || amount.value===""){
+        alert("Please enter all fields");
+        return;
+    }
 
-        title: document.getElementById("title").value,
-        amount: Number(document.getElementById("amount").value),
-        type: document.getElementById("type").value,
-        category: document.getElementById("category").value,
-        date: document.getElementById("date").value
-
+    const transaction = {
+        id: Date.now(),
+        text: text.value,
+        amount: +amount.value
     };
 
     transactions.push(transaction);
 
-    localStorage.setItem("transactions", JSON.stringify(transactions));
+    updateLocalStorage();
 
-    displayTransactions();
+    init();
 
-    form.reset();
-
+    text.value="";
+    amount.value="";
 });
 
 // Delete Transaction
-function deleteTransaction(index){
+function removeTransaction(id){
 
-    transactions.splice(index,1);
+    transactions = transactions.filter(transaction => transaction.id !== id);
 
-    localStorage.setItem("transactions", JSON.stringify(transactions));
+    updateLocalStorage();
 
-    displayTransactions();
-
+    init();
 }
-
-// Update Dashboard
-function updateDashboard(){
-
-    let income = 0;
-    let expense = 0;
-
-    transactions.forEach(item=>{
-
-        if(item.type==="Income")
-            income += item.amount;
-        else
-            expense += item.amount;
-
-    });
-
-    incomeEl.innerText = "₹" + income;
-    expenseEl.innerText = "₹" + expense;
-    balanceEl.innerText = "₹" + (income-expense);
-    transactionEl.innerText = transactions.length;
-
-}
-
-// Search
-search.addEventListener("keyup",function(){
-
-    let value = search.value.toLowerCase();
-
-    let filtered = transactions.filter(item=>{
-
-        return item.title.toLowerCase().includes(value);
-
-    });
-
-    displayTransactions(filtered);
-
-});
-
-// Dark Mode
-themeBtn.addEventListener("click",function(){
-
-    document.body.classList.toggle("dark");
-
-});
-
-// Initial Load
-displayTransactions();
