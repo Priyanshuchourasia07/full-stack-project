@@ -159,3 +159,108 @@ Passionate about Web Development, Programming, and Software Engineering.
 ---
 
 ### ⭐ If you found this project useful, consider giving it a Star on GitHub!
+
+
+# 📊 Real-Time Poll Application
+
+A modern and responsive **Real-Time Poll Application** built using **HTML, CSS, and JavaScript**. Users can vote for their favorite programming language, view live poll results, and see vote percentages with animated progress bars.
+
+## 🚀 Features
+
+* Create and participate in a poll
+* Four voting options
+* Live vote percentage calculation
+* Animated progress bars
+* Total vote counter
+* One vote per browser using Local Storage
+* Reset poll functionality
+* Responsive design for desktop and mobile
+* Clean and modern user interface
+
+## 🛠️ Technologies Used
+
+* HTML5
+* CSS3
+* JavaScript (ES6)
+* Local Storage API
+
+## 📂 Project Structure
+
+```
+Real-Time-Poll-App/
+│
+├── index.html
+├── style.css
+├── script.js
+└── README.md
+```
+
+## ▶️ How to Run
+
+1. Download or clone this repository.
+2. Open the project folder.
+3. Double-click **index.html** or open it in any modern web browser.
+4. Select an option and click the **Vote** button.
+5. View the live results and percentages.
+6. Use the **Reset Poll** button to clear all votes.
+
+## 📸 Application Features
+
+* Responsive user interface
+* Interactive voting system
+* Real-time percentage updates
+* Animated result bars
+* Total vote tracking
+* Browser-based vote restriction
+* Simple and beginner-friendly code
+
+## 💡 How It Works
+
+* Users choose one option from the poll.
+* The selected option receives one vote.
+* JavaScript calculates the total number of votes.
+* Each option's percentage is updated instantly.
+* Progress bars animate according to the vote percentage.
+* Poll data is stored in the browser using Local Storage.
+* Users cannot vote multiple times from the same browser unless the poll is reset.
+
+## 🔮 Future Improvements
+
+* Firebase integration for true real-time voting
+* User authentication
+* Multiple poll creation
+* Admin dashboard
+* Poll expiration timer
+* Dark mode
+* Charts and analytics
+* Export poll results
+* Backend database integration
+
+## 🎯 Learning Outcomes
+
+This project helps you understand:
+
+* HTML form handling
+* CSS Flexbox and responsive design
+* DOM manipulation
+* Event handling
+* Arrays and functions
+* JavaScript objects
+* Local Storage
+* Dynamic UI updates
+* Progress bar animations
+
+## 🤝 Contributing
+
+Contributions are welcome. Feel free to fork this repository, improve the project, and submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Prakash Kumar**
+
+If you found this project helpful, don't forget to ⭐ star the repository on GitHub.
+
