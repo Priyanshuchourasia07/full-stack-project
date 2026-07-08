@@ -264,3 +264,115 @@ This project is licensed under the MIT License.
 
 If you found this project helpful, don't forget to ⭐ star the repository on GitHub.
 
+
+
+# 💰 Expense Tracker
+
+A simple and responsive **Expense Tracker** web application built using **HTML, CSS, and JavaScript**. This project helps users manage their income and expenses by adding, deleting, and tracking transactions. All data is stored in the browser using **Local Storage**, so it remains available even after refreshing the page.
+
+---
+
+## 📌 Features
+
+* Add income and expense transactions
+* Display current balance
+* Calculate total income
+* Calculate total expenses
+* Delete transactions
+* Automatically update balance
+* Store data using Local Storage
+* Responsive and user-friendly interface
+
+---
+
+## 🛠️ Technologies Used
+
+* HTML5
+* CSS3
+* JavaScript (ES6)
+* Local Storage API
+
+---
+
+## 📂 Project Structure
+
+```
+Expense-Tracker/
+│
+├── index.html
+├── style.css
+├── script.js
+└── README.md
+```
+
+---
+
+## 🚀 How to Run the Project
+
+1. Download or clone this repository.
+2. Open the project folder.
+3. Double-click **index.html** or open it in your preferred web browser.
+4. Start adding your income and expenses.
+
+No installation or additional software is required.
+
+---
+
+## 📖 How to Use
+
+1. Enter a transaction name.
+2. Enter the amount.
+
+   * Positive value (+) = Income
+   * Negative value (-) = Expense
+3. Click **Add Transaction**.
+4. View your updated balance, income, and expense summary.
+5. Delete any transaction using the **Delete (X)** button.
+
+---
+
+## 💾 Local Storage
+
+The application automatically saves all transactions in the browser using **Local Storage**. Your data will remain available even after refreshing or reopening the browser.
+
+---
+
+## 🎯 Future Improvements
+
+* Edit existing transactions
+* Transaction categories
+* Monthly and yearly reports
+* Pie and bar charts
+* Search and filter transactions
+* Dark mode
+* Export data to CSV or PDF
+* User authentication
+* Cloud database integration
+
+---
+
+## 🎓 Learning Outcomes
+
+This project helps you understand:
+
+* DOM Manipulation
+* Event Handling
+* JavaScript Arrays and Objects
+* Array Methods (map, filter, reduce)
+* Local Storage API
+* Responsive Web Design
+* CRUD Operations
+* Basic Financial Calculations
+
+---
+
+## 👨‍💻 Author
+
+**Prakash Kumar**
+
+---
+
+## ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub. Your support is appreciated and helps motivate future improvements.
+
