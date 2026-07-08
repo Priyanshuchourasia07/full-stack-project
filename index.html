@@ -1,70 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning Management System</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Poll Application</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1>Learning Management System</h1>
+<div class="container">
 
-    <input type="text" id="search" placeholder="Search Course...">
+    <h1>📊 Real Time Poll</h1>
 
-    <button id="themeBtn">🌙 Dark Mode</button>
-</header>
+    <div class="poll-box">
 
-<section class="progress-section">
-    <h2>Your Progress</h2>
+        <h2 id="question">
+            Which Programming Language do you like the most?
+        </h2>
 
-    <div class="progress-bar">
-        <div id="progress"></div>
+        <form id="pollForm">
+
+            <label class="option">
+                <input type="radio" name="vote" value="0">
+                HTML
+            </label>
+
+            <label class="option">
+                <input type="radio" name="vote" value="1">
+                CSS
+            </label>
+
+            <label class="option">
+                <input type="radio" name="vote" value="2">
+                JavaScript
+            </label>
+
+            <label class="option">
+                <input type="radio" name="vote" value="3">
+                Python
+            </label>
+
+            <button type="submit" id="voteBtn">
+                Vote
+            </button>
+
+        </form>
+
     </div>
 
-    <p id="progressText">0% Completed</p>
-</section>
+    <div class="results">
 
-<section class="courses" id="courseContainer">
+        <h2>Live Results</h2>
 
-    <div class="course">
-        <h2>HTML Basics</h2>
-        <p>Learn HTML from scratch.</p>
-        <button class="completeBtn">Complete</button>
+        <!-- HTML -->
+        <div class="result-item">
+            <div class="title">
+                <span>HTML</span>
+                <span id="htmlPercent">0%</span>
+            </div>
+
+            <div class="progress">
+                <div class="bar" id="bar0"></div>
+            </div>
+        </div>
+
+        <!-- CSS -->
+        <div class="result-item">
+            <div class="title">
+                <span>CSS</span>
+                <span id="cssPercent">0%</span>
+            </div>
+
+            <div class="progress">
+                <div class="bar" id="bar1"></div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="result-item">
+            <div class="title">
+                <span>JavaScript</span>
+                <span id="jsPercent">0%</span>
+            </div>
+
+            <div class="progress">
+                <div class="bar" id="bar2"></div>
+            </div>
+        </div>
+
+        <!-- Python -->
+        <div class="result-item">
+            <div class="title">
+                <span>Python</span>
+                <span id="pythonPercent">0%</span>
+            </div>
+
+            <div class="progress">
+                <div class="bar" id="bar3"></div>
+            </div>
+        </div>
+
+        <div class="votes">
+            Total Votes :
+            <span id="totalVotes">0</span>
+        </div>
+
+        <button id="resetBtn">
+            Reset Poll
+        </button>
+
     </div>
 
-    <div class="course">
-        <h2>CSS Mastery</h2>
-        <p>Learn modern CSS.</p>
-        <button class="completeBtn">Complete</button>
-    </div>
-
-    <div class="course">
-        <h2>JavaScript</h2>
-        <p>Become a JS Developer.</p>
-        <button class="completeBtn">Complete</button>
-    </div>
-
-    <div class="course">
-        <h2>React</h2>
-        <p>Frontend Library.</p>
-        <button class="completeBtn">Complete</button>
-    </div>
-
-    <div class="course">
-        <h2>Node.js</h2>
-        <p>Backend Development.</p>
-        <button class="completeBtn">Complete</button>
-    </div>
-
-    <div class="course">
-        <h2>MongoDB</h2>
-        <p>Database Basics.</p>
-        <button class="completeBtn">Complete</button>
-    </div>
-
-</section>
+</div>
 
 <script src="script.js"></script>
 

@@ -1,74 +1,104 @@
-const buttons = document.querySelectorAll(".completeBtn");
-const progressBar = document.getElementById("progress");
-const progressText = document.getElementById("progressText");
+// Votes for each option
+let votes = [0, 0, 0, 0];
 
-let completed = 0;
-const totalCourses = buttons.length;
+// Check if the user has already voted
+let hasVoted = localStorage.getItem("hasVoted");
 
-buttons.forEach(button => {
+// HTML elements
+const form = document.getElementById("pollForm");
+const totalVotes = document.getElementById("totalVotes");
+const resetBtn = document.getElementById("resetBtn");
 
-button.addEventListener("click", function(){
+// Percentage text
+const percentText = [
+    document.getElementById("htmlPercent"),
+    document.getElementById("cssPercent"),
+    document.getElementById("jsPercent"),
+    document.getElementById("pythonPercent")
+];
 
-if(!this.classList.contains("completed")){
+// Progress bars
+const bars = [
+    document.getElementById("bar0"),
+    document.getElementById("bar1"),
+    document.getElementById("bar2"),
+    document.getElementById("bar3")
+];
 
-this.classList.add("completed");
-
-this.innerHTML="Completed ✓";
-
-completed++;
-
-let percent = (completed/totalCourses)*100;
-
-progressBar.style.width = percent + "%";
-
-progressText.innerHTML = Math.round(percent) + "% Completed";
-
+// Load saved votes
+if (localStorage.getItem("pollVotes")) {
+    votes = JSON.parse(localStorage.getItem("pollVotes"));
 }
 
+updateResults();
+
+// Vote Button
+form.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    if (hasVoted) {
+        alert("You have already voted!");
+        return;
+    }
+
+    const selected = document.querySelector("input[name='vote']:checked");
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    const index = Number(selected.value);
+
+    votes[index]++;
+
+    localStorage.setItem("pollVotes", JSON.stringify(votes));
+
+    localStorage.setItem("hasVoted", "true");
+
+    hasVoted = true;
+
+    updateResults();
+
+    alert("Thank you for voting!");
 });
 
-});
+// Update Results
+function updateResults() {
 
-const search = document.getElementById("search");
+    const total = votes.reduce((a, b) => a + b, 0);
 
-search.addEventListener("keyup", function(){
+    totalVotes.textContent = total;
 
-let filter = this.value.toLowerCase();
+    for (let i = 0; i < votes.length; i++) {
 
-let courses = document.querySelectorAll(".course");
+        let percentage = 0;
 
-courses.forEach(course=>{
+        if (total > 0) {
+            percentage = (votes[i] / total) * 100;
+        }
 
-let title = course.querySelector("h2").innerText.toLowerCase();
+        bars[i].style.width = percentage + "%";
 
-if(title.includes(filter)){
-
-course.style.display="block";
-
-}else{
-
-course.style.display="none";
-
+        percentText[i].textContent = percentage.toFixed(1) + "%";
+    }
 }
 
-});
+// Reset Poll
+resetBtn.addEventListener("click", function () {
 
-});
+    if (!confirm("Reset the poll?")) return;
 
-const themeBtn=document.getElementById("themeBtn");
+    votes = [0, 0, 0, 0];
 
-themeBtn.addEventListener("click",function(){
+    localStorage.removeItem("pollVotes");
 
-document.body.classList.toggle("dark");
+    localStorage.removeItem("hasVoted");
 
-if(document.body.classList.contains("dark")){
+    hasVoted = false;
 
-this.innerHTML="☀ Light Mode";
+    form.reset();
 
-}else{
-
-this.innerHTML="🌙 Dark Mode";
-
-}
-
+    updateResults();
 });
