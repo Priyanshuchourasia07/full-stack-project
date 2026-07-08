@@ -3,118 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Time Poll Application</title>
+    <title>Expense Tracker Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
+
 <body>
 
 <div class="container">
 
-    <h1>📊 Real Time Poll</h1>
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
-    <div class="poll-box">
+        <div class="logo">
+            <i class="fa-solid fa-wallet"></i>
+            <h2>Expense Tracker</h2>
+        </div>
 
-        <h2 id="question">
-            Which Programming Language do you like the most?
-        </h2>
+        <ul class="menu">
+            <li class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</li>
+            <li><i class="fa-solid fa-money-bill"></i> Transactions</li>
+            <li><i class="fa-solid fa-chart-pie"></i> Reports</li>
+            <li><i class="fa-solid fa-gear"></i> Settings</li>
+        </ul>
 
-        <form id="pollForm">
+    </aside>
 
-            <label class="option">
-                <input type="radio" name="vote" value="0">
-                HTML
-            </label>
+    <!-- Main -->
+    <main>
 
-            <label class="option">
-                <input type="radio" name="vote" value="1">
-                CSS
-            </label>
+        <!-- Header -->
 
-            <label class="option">
-                <input type="radio" name="vote" value="2">
-                JavaScript
-            </label>
+        <header>
 
-            <label class="option">
-                <input type="radio" name="vote" value="3">
-                Python
-            </label>
+            <div>
+                <h1>Expense Dashboard</h1>
+                <p>Track your income and expenses easily</p>
+            </div>
 
-            <button type="submit" id="voteBtn">
-                Vote
+            <button id="themeBtn">
+                <i class="fa-solid fa-moon"></i>
             </button>
 
-        </form>
+        </header>
 
-    </div>
+        <!-- Cards -->
 
-    <div class="results">
+        <section class="cards">
 
-        <h2>Live Results</h2>
+            <div class="card income">
 
-        <!-- HTML -->
-        <div class="result-item">
-            <div class="title">
-                <span>HTML</span>
-                <span id="htmlPercent">0%</span>
+                <div>
+                    <h3>Total Income</h3>
+                    <h2 id="income">₹0</h2>
+                </div>
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
             </div>
 
-            <div class="progress">
-                <div class="bar" id="bar0"></div>
-            </div>
-        </div>
+            <div class="card expense">
 
-        <!-- CSS -->
-        <div class="result-item">
-            <div class="title">
-                <span>CSS</span>
-                <span id="cssPercent">0%</span>
-            </div>
+                <div>
+                    <h3>Total Expense</h3>
+                    <h2 id="expense">₹0</h2>
+                </div>
 
-            <div class="progress">
-                <div class="bar" id="bar1"></div>
-            </div>
-        </div>
+                <i class="fa-solid fa-arrow-trend-down"></i>
 
-        <!-- JavaScript -->
-        <div class="result-item">
-            <div class="title">
-                <span>JavaScript</span>
-                <span id="jsPercent">0%</span>
             </div>
 
-            <div class="progress">
-                <div class="bar" id="bar2"></div>
+            <div class="card balance">
+
+                <div>
+                    <h3>Balance</h3>
+                    <h2 id="balance">₹0</h2>
+                </div>
+
+                <i class="fa-solid fa-wallet"></i>
+
             </div>
-        </div>
 
-        <!-- Python -->
-        <div class="result-item">
-            <div class="title">
-                <span>Python</span>
-                <span id="pythonPercent">0%</span>
+            <div class="card total">
+
+                <div>
+                    <h3>Transactions</h3>
+                    <h2 id="transactions">0</h2>
+                </div>
+
+                <i class="fa-solid fa-list"></i>
+
             </div>
 
-            <div class="progress">
-                <div class="bar" id="bar3"></div>
+        </section>
+
+        <!-- Form -->
+
+        <section class="form-section">
+
+            <h2>Add Transaction</h2>
+
+            <form id="transactionForm">
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Enter Title"
+                    required>
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="Amount"
+                    required>
+
+                <select id="type">
+
+                    <option value="Income">Income</option>
+
+                    <option value="Expense">Expense</option>
+
+                </select>
+
+                <select id="category">
+
+                    <option>Food</option>
+                    <option>Shopping</option>
+                    <option>Travel</option>
+                    <option>Bills</option>
+                    <option>Entertainment</option>
+                    <option>Healthcare</option>
+                    <option>Education</option>
+                    <option>Fuel</option>
+                    <option>Other</option>
+
+                </select>
+
+                <input
+                    type="date"
+                    id="date"
+                    required>
+
+                <button type="submit">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Transaction
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- Search -->
+
+        <section class="searchBox">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search Transaction...">
+
+        </section>
+
+        <!-- Table -->
+
+        <section class="table-section">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Title</th>
+
+                        <th>Amount</th>
+
+                        <th>Type</th>
+
+                        <th>Category</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="transactionTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- Charts -->
+
+        <section class="charts">
+
+            <div class="chart">
+
+                <h2>Expense by Category</h2>
+
+                <canvas id="pieChart"></canvas>
+
             </div>
-        </div>
 
-        <div class="votes">
-            Total Votes :
-            <span id="totalVotes">0</span>
-        </div>
+            <div class="chart">
 
-        <button id="resetBtn">
-            Reset Poll
-        </button>
+                <h2>Monthly Expenses</h2>
 
-    </div>
+                <canvas id="lineChart"></canvas>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 

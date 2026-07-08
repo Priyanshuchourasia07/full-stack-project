@@ -1,104 +1,125 @@
-// Votes for each option
-let votes = [0, 0, 0, 0];
+// Get Elements
+const form = document.getElementById("transactionForm");
+const table = document.getElementById("transactionTable");
 
-// Check if the user has already voted
-let hasVoted = localStorage.getItem("hasVoted");
+const incomeEl = document.getElementById("income");
+const expenseEl = document.getElementById("expense");
+const balanceEl = document.getElementById("balance");
+const transactionEl = document.getElementById("transactions");
 
-// HTML elements
-const form = document.getElementById("pollForm");
-const totalVotes = document.getElementById("totalVotes");
-const resetBtn = document.getElementById("resetBtn");
+const themeBtn = document.getElementById("themeBtn");
+const search = document.getElementById("search");
 
-// Percentage text
-const percentText = [
-    document.getElementById("htmlPercent"),
-    document.getElementById("cssPercent"),
-    document.getElementById("jsPercent"),
-    document.getElementById("pythonPercent")
-];
+// Load Data
+let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-// Progress bars
-const bars = [
-    document.getElementById("bar0"),
-    document.getElementById("bar1"),
-    document.getElementById("bar2"),
-    document.getElementById("bar3")
-];
+// Display Transactions
+function displayTransactions(list = transactions) {
 
-// Load saved votes
-if (localStorage.getItem("pollVotes")) {
-    votes = JSON.parse(localStorage.getItem("pollVotes"));
+    table.innerHTML = "";
+
+    list.forEach((item, index) => {
+
+        let row = `
+        <tr>
+            <td>${item.title}</td>
+            <td>₹${item.amount}</td>
+            <td>${item.type}</td>
+            <td>${item.category}</td>
+            <td>${item.date}</td>
+            <td>
+                <button class="deleteBtn" onclick="deleteTransaction(${index})">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        `;
+
+        table.innerHTML += row;
+    });
+
+    updateDashboard();
 }
 
-updateResults();
-
-// Vote Button
-form.addEventListener("submit", function (e) {
+// Add Transaction
+form.addEventListener("submit", function(e){
 
     e.preventDefault();
 
-    if (hasVoted) {
-        alert("You have already voted!");
-        return;
-    }
+    let transaction = {
 
-    const selected = document.querySelector("input[name='vote']:checked");
+        title: document.getElementById("title").value,
+        amount: Number(document.getElementById("amount").value),
+        type: document.getElementById("type").value,
+        category: document.getElementById("category").value,
+        date: document.getElementById("date").value
 
-    if (!selected) {
-        alert("Please select an option.");
-        return;
-    }
+    };
 
-    const index = Number(selected.value);
+    transactions.push(transaction);
 
-    votes[index]++;
+    localStorage.setItem("transactions", JSON.stringify(transactions));
 
-    localStorage.setItem("pollVotes", JSON.stringify(votes));
-
-    localStorage.setItem("hasVoted", "true");
-
-    hasVoted = true;
-
-    updateResults();
-
-    alert("Thank you for voting!");
-});
-
-// Update Results
-function updateResults() {
-
-    const total = votes.reduce((a, b) => a + b, 0);
-
-    totalVotes.textContent = total;
-
-    for (let i = 0; i < votes.length; i++) {
-
-        let percentage = 0;
-
-        if (total > 0) {
-            percentage = (votes[i] / total) * 100;
-        }
-
-        bars[i].style.width = percentage + "%";
-
-        percentText[i].textContent = percentage.toFixed(1) + "%";
-    }
-}
-
-// Reset Poll
-resetBtn.addEventListener("click", function () {
-
-    if (!confirm("Reset the poll?")) return;
-
-    votes = [0, 0, 0, 0];
-
-    localStorage.removeItem("pollVotes");
-
-    localStorage.removeItem("hasVoted");
-
-    hasVoted = false;
+    displayTransactions();
 
     form.reset();
 
-    updateResults();
 });
+
+// Delete Transaction
+function deleteTransaction(index){
+
+    transactions.splice(index,1);
+
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+
+    displayTransactions();
+
+}
+
+// Update Dashboard
+function updateDashboard(){
+
+    let income = 0;
+    let expense = 0;
+
+    transactions.forEach(item=>{
+
+        if(item.type==="Income")
+            income += item.amount;
+        else
+            expense += item.amount;
+
+    });
+
+    incomeEl.innerText = "₹" + income;
+    expenseEl.innerText = "₹" + expense;
+    balanceEl.innerText = "₹" + (income-expense);
+    transactionEl.innerText = transactions.length;
+
+}
+
+// Search
+search.addEventListener("keyup",function(){
+
+    let value = search.value.toLowerCase();
+
+    let filtered = transactions.filter(item=>{
+
+        return item.title.toLowerCase().includes(value);
+
+    });
+
+    displayTransactions(filtered);
+
+});
+
+// Dark Mode
+themeBtn.addEventListener("click",function(){
+
+    document.body.classList.toggle("dark");
+
+});
+
+// Initial Load
+displayTransactions();
